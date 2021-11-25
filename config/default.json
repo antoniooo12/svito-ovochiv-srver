@@ -1,0 +1,13 @@
+{
+  "db": {
+    "user": "postgres",
+    "password":"root",
+    "host":"localhost",
+    "port":5555,
+    "database":"svitovochiv"
+  },
+  "secretKey": "-kewr0-2kw-Sw",
+  "serverPort": 4800,
+  "filePath": "D:\\Avtosave_google\\svit-ovochiv\\site\\server\\files"
+
+}
