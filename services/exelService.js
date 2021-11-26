@@ -28,15 +28,16 @@ class ExelService {
                 if (nav[j][0] === 'B') {
                     block.title = param
                     tempString += `('${checkToqoute( block.title)}', `
+
                 } else if (nav[j][0] === 'C') {
                     block.units = param;
                     tempString += `'${block.units}', `
                 } else if (nav[j][0] === 'D') {
                     block.price = param;
                     tempString += `${block.price}),`
-
                     this.toDb.push(block)
                     block = {}
+                    console.log()
                 }
             }
 
@@ -51,36 +52,31 @@ class ExelService {
     }
 
     async uploadToDb() {
-
+        console.log(this.toDb)
         try {
-            // const res = await Product.bulkCreate(this.toDb, {
-            //     updateOnDuplicate: ['id', 'name']
-            // }).then(() => {
-            //     return Product.findAll();
-            // }).then(product => {
-            //     // console.log() // ... in order to get the array of user objects
-            // })
-            const st = `('test3', 'tt', 40)`
-            // console.log(this.toDbString)
+            let newTitle = ''
+            this.toDb.forEach(product => {
+                newTitle += ` '${checkToqoute(product.title)}' ,`
+            })
+            newTitle = newTitle.slice(0, -1)
+            let res = await db.query(`UPDATE products SET actual =false WHERE title NOT IN (${newTitle});`)
+        } catch (e) {
+            console.log(e)
+        }
+        try {
             await db.query(`INSERT INTO products (title, units, price)
             VALUES
             ${this.toDbString}
                             ON CONFLICT (title)
             DO UPDATE SET (title, price) = (EXCLUDED.title, EXCLUDED.price);                               `)
-
-
         } catch (e) {
-            console.log('!!!!!!!!!===!!!!!!!!!!!')
             console.log(e)
         }
 
     }
 }
 
-function setCharAt(str, index, chr) {
-    if (index > str.length - 1) return str;
-    return str.substring(0, index) + chr + str.substring(index + 1);
-}
+
 
 function checkToqoute(word) {
     let arr = word.split("'")

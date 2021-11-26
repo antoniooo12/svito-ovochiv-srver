@@ -14,7 +14,7 @@ const Product = sequelize.define('product',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, unique: true},
     units:{type: DataTypes.STRING},
-    // actual:{type: DataTypes.BOOLEAN,defaultValue: false},
+    actual:{type: DataTypes.BOOLEAN,defaultValue: true},
     price:{type: DataTypes.DECIMAL(10, 2)},
     // photo: {type: DataTypes.STRING, require},
 },{  createdAt: false, updatedAt:false})
