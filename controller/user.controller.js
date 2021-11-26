@@ -9,23 +9,6 @@ const {check, validationResult} = require('express-validator')
 const {User} = require('../db/model/models')
 
 class UserController {
-
-    async getUsers(req, res) {
-
-    }
-
-    async getOneUser(req, res) {
-
-    }
-
-    async updateUser(req, res) {
-
-    }
-
-    async deleteUser(req, res) {
-
-    }
-
     async registrationUser(req, res) {
         try {
             const {firstName, lastName, email,password,  role} = req.body
@@ -42,7 +25,7 @@ class UserController {
                 lastName: lastName,
                 email: email,
                 password: hashPassword,
-                role: "ADMIN",
+                role: "USER",
             })
             await user.save()
             return res.json(user)

@@ -30,8 +30,8 @@ class ExelService {
                     tempString += `('${checkToqoute( block.title)}', `
 
                 } else if (nav[j][0] === 'C') {
-                    block.units = param;
-                    tempString += `'${block.units}', `
+                    block.unit = param;
+                    tempString += `'${block.unit}', `
                 } else if (nav[j][0] === 'D') {
                     block.price = param;
                     tempString += `${block.price}),`
@@ -48,7 +48,7 @@ class ExelService {
         // console.log('======')
         this.toDbString = tempString.slice(0, -1);
         console.log(this.toDbString)
-        // console.log('======')
+        // console.log('===========')
     }
 
     async uploadToDb() {
@@ -64,7 +64,7 @@ class ExelService {
             console.log(e)
         }
         try {
-            await db.query(`INSERT INTO products (title, units, price)
+            await db.query(`INSERT INTO products (title, unit, price)
             VALUES
             ${this.toDbString}
                             ON CONFLICT (title)
