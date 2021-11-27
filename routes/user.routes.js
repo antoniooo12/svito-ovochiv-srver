@@ -10,6 +10,7 @@ router.post('/registration', userController.registrationUser)
 router.post('/login', userController.loginUser)
 router.get('/auth', authMiddleware, userController.authUser)
 router.get('/product', productController.getAllProducts)
+router.get('/getSection', productController.getAllSections)
 router.post('/product', clientController.addToCart)
 
 module.exports = router

@@ -12,6 +12,7 @@ const sequelize = require('./db/dbSequelize')
 const  fileRouter = require('./routes/fileRouter.routes')
 const userRouter = require('./routes/user.routes')
 const adminRouter = require('./routes/admi.routers')
+const {Product} = require("./db/model/models");
 const app = express()
 
 app.use(cors({
