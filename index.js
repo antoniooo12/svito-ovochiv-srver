@@ -9,14 +9,20 @@ const path = require('path')
 
 const authMiddleware = require('./middleware/authMiddleware')
 const sequelize = require('./db/dbSequelize')
-const  fileRouter = require('./routes/fileRouter.routes')
+const fileRouter = require('./routes/fileRouter.routes')
 const userRouter = require('./routes/user.routes')
 const adminRouter = require('./routes/admi.routers')
+const {OrderProductList} = require("./db/model/models");
+const {Order} = require("./db/model/models");
+const {Basket} = require("./db/model/models");
+const {Type} = require("./db/model/models");
+const {OrderProduct} = require("./db/model/models");
+const {User} = require("./db/model/models");
 const {Product} = require("./db/model/models");
 const app = express()
 
 app.use(cors({
-    origin:['http://localhost:3000','http://localhost:3001', 'http://localhost:4800']
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4800']
 }))
 app.use(express.static(path.resolve(__dirname, 'files', 'static')))
 app.use(fileUpload({}))
@@ -32,10 +38,16 @@ app.use('/api/admin', authMiddleware, adminRouter)
 const start = async () => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync()
+        // await sequelize.sync()
+        // await User.sync({force: true})
+        // await Type.sync({force: true})
+        // await Basket.sync({force: true})
+        // await Order.sync({force: true})
+        // await OrderProduct.sync({force: true})
+        // await OrderProductList.sync({force: true})
         console.log('Соединение с БД было успешно установлено')
         app.listen(PORT, () =>
-            console.log(`server run on ${PORT}`)
+            console.log(`server run on  ${PORT}`)
         )
     } catch (e) {
         console.log(e)

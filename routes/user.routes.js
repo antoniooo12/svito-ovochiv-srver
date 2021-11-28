@@ -12,5 +12,6 @@ router.get('/auth', authMiddleware, userController.authUser)
 router.get('/product', productController.getAllProducts)
 router.get('/getSection', productController.getAllSections)
 router.post('/product', clientController.addToCart)
+router.post('/createOrder', clientController.createOrder)
 
 module.exports = router
