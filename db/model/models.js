@@ -40,6 +40,7 @@ const Order = sequelize.define('order', {
     status: {type: DataTypes.STRING},
     customerNumber: {type: DataTypes.STRING},
 
+
 })
 
 const OrderProduct = sequelize.define('orderProduct', {

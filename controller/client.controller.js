@@ -24,15 +24,50 @@ class ClientController {
     async createOrder(req, res) {
         try {
             const client = req.body.client
-            const cart = req.body.cart
+            let cart = req.body.cart
             const user = await User.upsert({
                 firstName: client.name,
                 number: client.number,
             })
-            console.log( user[0].dataValues.id)
+            console.log(user[0].dataValues.id)
             let basket = await Basket.findOrCreate({
                 where: {userId: user[0].dataValues.id}
             })
+            console.log(basket[0].dataValues.id)
+            let order = await Order.create({
+                status: 'виконуеться',
+                customerNumber: user[0].dataValues.number,
+                basketId: basket[0].dataValues.id,
+            })
+
+            let orderProductList = await OrderProductList.create({orderId: order.id})
+
+            let toFindProduct = cart.map(el => el.id)
+            const foundProducts = await Product.findAll({
+                where: {
+                    id: {[Sequelize.Op.in]: toFindProduct}
+                }
+            })
+            cart = cart.map(el => {
+                const pFromDb = foundProducts.filter(pDb => pDb.id === el.id)[0]
+
+                const totalPrice = Math.round(((el.weight * pFromDb.price) + Number.EPSILON) * 100) / 100
+                const p = {
+                    weight: el.weight,
+                    price: pFromDb.price,
+                    totalPrice: totalPrice,
+                    orderProductListId: orderProductList.id,
+                    productId: pFromDb.id,
+                }
+                console.log(p)
+                return p
+            })
+
+            const orderProduct = await OrderProduct.bulkCreate(cart)
+
+            console.log('=========')
+            console.log(cart)
+
 
             // console.log('========')
             // console.log(basket)
@@ -70,7 +105,7 @@ class ClientController {
             // // console.log(foundProducts)
             // console.log('========')
             // console.log(foundProducts)
-            return res.json({foundProducts})
+            return res.json({})
         } catch (e) {
             console.log(e)
         }
