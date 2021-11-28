@@ -2,6 +2,7 @@ const fs = require('fs')
 const xlsx = require('xlsx')
 const config = require('config')
 const ExelService = require('../services/exelService')
+const path = require("path");
 
 
 class FileController {
@@ -13,15 +14,16 @@ class FileController {
             if (type !== 'xlsx') {
                 return res.status(403).json({message: "файл не формату xlsx"})
             }
-            const path = `${config.get('filePath')}\\${file.name}`
+            let pathFile = path.resolve(__dirname, '..', 'files', file.name)
+            // let    path = `${config.get('filePath')}\\${file.name}`
             // if (fs.existsSync(path)) {
             //     return res.status(400).json({message: "file already exist"})
             // }
-            await file.mv(path)
-            const newFile = new ExelService(path)
+            await file.mv(pathFile)
+            const newFile = new ExelService(pathFile)
             await newFile.parse()
             await newFile.uploadToDb()
-res.json({message:'успішно'})
+            res.json({message: 'успішно'})
         } catch (e) {
 
         }

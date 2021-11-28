@@ -7,12 +7,16 @@ const db = require('../db/db')
 class ProductController {
     async addImage(req, res) {
         try {
+
             const {id} = req.body
-            const {image} = req.files
-            let fileName = uuid.v4() + ".jpg"
-            image.mv(path.resolve(__dirname, '..', 'files', 'static', fileName))
+            let image = req.files.file
+            console.log(image)
+            let fileName = await uuid.v4() + ".jpg"
+            let filePath = await path.resolve(__dirname, '..', 'files', 'static', fileName)
+            console.log(filePath)
+            await image.mv(filePath)
             const produt = await Product.update({image: fileName}, {where: {id}})
-            return res.json(produt)
+            return res.json(filePath)
         } catch (e) {
             console.log(e)
         }

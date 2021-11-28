@@ -21,12 +21,21 @@ const {User} = require("./db/model/models");
 const {Product} = require("./db/model/models");
 const app = express()
 
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4800']
-}))
-app.use(express.static(path.resolve(__dirname, 'files', 'static')))
+
 app.use(fileUpload({}))
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4800', 'http://localhost:2999']
+}))
 app.use(express.json())
+app.use(express.static('static'))
+
+let pathStatic = path.join(__dirname,'static')
+console.log(pathStatic)
+
+app.get('/api/content', (req,res)=>{
+    res.sendFile(pathStatic)
+})
+
 
 app.use('/api/user', userRouter)
 app.use('/api/files', fileRouter)
