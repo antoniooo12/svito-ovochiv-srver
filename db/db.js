@@ -7,6 +7,7 @@ const pool  = mysql.createConnection({
     user: dbParams.user,
     password:dbParams.password,
     database: dbParams.database,
+    port: dbParams.port,
 })
 
 
