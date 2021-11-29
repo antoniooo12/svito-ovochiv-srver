@@ -28,11 +28,13 @@ app.use('/api/admin', authMiddleware, adminRouter)
 
 const start = async () => {
     try {
+
         await sequelize.authenticate()
-        await sequelize.sync()
+        // await sequelize.sync({force: true})
+        // await Product.sync()
         console.log('Соединение с БД было успешно установлено')
         app.listen(PORT, () =>
-            console.log(`server run on ${PORT}`)
+            console.log(`server run on ${PORT}  `)
         )
     } catch (e) {
         console.log(e)

@@ -1,10 +1,10 @@
 {
   "db": {
-    "user": "dbuser",
+    "user": "root",
     "password":"root",
-    "host":"83df840svitovochiv",
+    "host":"localhost",
     "port":3306,
-    "database":"webstoresvitovochiv",
+    "database":"svitovochiv",
     "type": "mysql"
   },
   "secretKey": "-kewr0-2kw-Sw",

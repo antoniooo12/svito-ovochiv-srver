@@ -51,7 +51,6 @@ class ExelService {
                 writeBool = true
             }
         }
-        // this.toDbString = tempString.slice(0, -1);
         this.parsToString()
 
     }
@@ -91,11 +90,10 @@ class ExelService {
             })
             newTitle = newTitle.slice(0, -1)
             console.log(newTitle)
-///todo  перепистати на mysql
-            await db.query(`UPDATE products
+             db.execute(`UPDATE products
                             SET actual = false
                             WHERE title NOT IN (${newTitle});`)
-            await db.query(`UPDATE products
+             db.execute(`UPDATE products
                             SET actual = true
                             WHERE title IN (${newTitle});`)
         } catch (e) {

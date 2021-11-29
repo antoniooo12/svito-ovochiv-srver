@@ -8,9 +8,10 @@ class TypeController {
     }
 
     async create(typeName) {
-        const type = await Type.upsert({title: typeName},{
-            returning: true,
-            plain: true
+        const type = await Type.findOrCreate({
+            where: {
+                title: typeName
+            }
         })
         console.log('+++++++')
         console.log(type[0].dataValues.id)

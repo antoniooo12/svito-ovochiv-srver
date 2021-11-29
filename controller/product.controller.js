@@ -3,7 +3,7 @@ const config = require('config')
 const path = require('path')
 const {Type} = require("../db/model/models");
 const {Product} = require('../db/model/models')
-const db = require('../db/db')
+const pool = require('../db/db')
 class ProductController {
     async addImage(req, res) {
         try {
@@ -55,12 +55,13 @@ class ProductController {
     }
 
     async getAllSections(req, res) {
-        ///todo  перепистати на mysql
+        let query = `select *
+                     from types
+                     where Id in (select typeId from products where actual = 1 group by typeId);`
+        const [rows] = await pool.execute(query)
+        console.log(rows)
 
-        const section = await db.query(`SELECT *
-                                        FROM types
-                                        WHERE Id in (select typeId from products where actual = 1 group by typeId);`)
-        return res.json(section.rows)
+        return res.json(rows)
     }
 }
 
