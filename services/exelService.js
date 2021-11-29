@@ -91,7 +91,7 @@ class ExelService {
             })
             newTitle = newTitle.slice(0, -1)
             console.log(newTitle)
-
+///todo  перепистати на mysql
             await db.query(`UPDATE products
                             SET actual = false
                             WHERE title NOT IN (${newTitle});`)

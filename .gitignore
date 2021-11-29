@@ -2,4 +2,6 @@ node_modules
 .idea
 /node_modules/
 config
+config/default.json
+test
 files

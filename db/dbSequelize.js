@@ -6,8 +6,8 @@ const dbParams = config.get('db')
 const sequelize = new Sequelize(dbParams.database,
     dbParams.user, dbParams.password, {
         port: dbParams.port,
-        host: 'localhost',
-        dialect: 'postgres'
+        host: dbParams.host,
+        dialect: dbParams.type
     })
 
 module.exports = sequelize

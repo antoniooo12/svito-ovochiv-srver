@@ -55,12 +55,11 @@ class ProductController {
     }
 
     async getAllSections(req, res) {
-        const section = await db.query(` SELECT *
-                                         FROM types
-                                         WHERE Id IN (SELECT "typeId"
-                                                      FROM products
-                                                      WHERE actual = true
-                                                      GROUP BY "typeId")`)
+        ///todo  перепистати на mysql
+
+        const section = await db.query(`SELECT *
+                                        FROM types
+                                        WHERE Id in (select typeId from products where actual = 1 group by typeId);`)
         return res.json(section.rows)
     }
 }
