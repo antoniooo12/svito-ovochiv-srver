@@ -1,10 +1,11 @@
 {
   "db": {
-    "user": "postgres",
+    "user": "dbuser",
     "password":"root",
-    "host":"localhost",
-    "port":5555,
-    "database":"svitovochiv"
+    "host":"83df840svitovochiv",
+    "port":3306,
+    "database":"webstoresvitovochiv",
+    "type": "mysql"
   },
   "secretKey": "-kewr0-2kw-Sw",
   "serverPort": 4800,
